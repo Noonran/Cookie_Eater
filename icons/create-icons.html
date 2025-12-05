@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Créer les icônes Cookie Eater</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; background: #1a1a2e; color: white; }
+    h1 { color: #667eea; }
+    .icons { display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap; }
+    .icon-box { background: #16213e; padding: 20px; border-radius: 12px; text-align: center; }
+    canvas { display: block; margin: 0 auto 15px; border-radius: 4px; }
+    a { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #667eea, #764ba2); 
+        color: white; text-decoration: none; border-radius: 8px; margin-top: 10px; }
+    a:hover { opacity: 0.9; }
+    .info { background: #16213e; padding: 20px; border-radius: 12px; margin-top: 20px; }
+    code { background: #0d1117; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🍪 Générateur d'icônes Cookie Eater</h1>
+  <p>Cliquez sur les boutons pour télécharger chaque icône, puis placez-les dans le dossier <code>icons/</code></p>
+  
+  <div class="icons" id="icons"></div>
+  
+  <div class="info">
+    <h3>📋 Instructions</h3>
+    <ol>
+      <li>Téléchargez les 4 icônes ci-dessus</li>
+      <li>Placez-les dans le dossier <code>icons/</code> de l'extension</li>
+      <li>Les fichiers doivent être nommés : <code>icon16.png</code>, <code>icon32.png</code>, <code>icon48.png</code>, <code>icon128.png</code></li>
+      <li>Rechargez l'extension dans Chrome</li>
+    </ol>
+  </div>
+
+  <script>
+    const sizes = [16, 32, 48, 128];
+    const container = document.getElementById('icons');
+    
+    sizes.forEach(size => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      // Gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // Draw cookie circle
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/2 - 1, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Draw chocolate chips
+      ctx.fillStyle = '#4a3728';
+      const chips = [
+        {x: 0.31, y: 0.37, r: 0.09},
+        {x: 0.62, y: 0.31, r: 0.075},
+        {x: 0.44, y: 0.62, r: 0.08},
+        {x: 0.69, y: 0.56, r: 0.065},
+        {x: 0.25, y: 0.62, r: 0.055}
+      ];
+      
+      chips.forEach(chip => {
+        ctx.beginPath();
+        ctx.arc(size * chip.x, size * chip.y, size * chip.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      // Create download link
+      const box = document.createElement('div');
+      box.className = 'icon-box';
+      
+      const preview = document.createElement('canvas');
+      preview.width = Math.max(size, 64);
+      preview.height = Math.max(size, 64);
+      const pctx = preview.getContext('2d');
+      pctx.drawImage(canvas, (preview.width-size)/2, (preview.height-size)/2);
+      
+      const label = document.createElement('div');
+      label.textContent = `${size}×${size} pixels`;
+      
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `icon${size}.png`;
+      link.textContent = `Télécharger icon${size}.png`;
+      
+      box.appendChild(preview);
+      box.appendChild(label);
+      box.appendChild(link);
+      container.appendChild(box);
+    });
+  </script>
+</body>
+</html>
+
