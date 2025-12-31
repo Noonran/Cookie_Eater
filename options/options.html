@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Eater & AdBlocker - Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon">🛡️</span>
+          <div class="logo-text">
+            <h1>Cookie Eater & AdBlocker</h1>
+            <span class="version">v3.0.0</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="lang-btn" id="langBtn" title="Change language">
+            <span class="flag" id="currentFlag">🇬🇧</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Dashboard -->
+      <section class="card dashboard">
+        <h2 class="card-title">
+          <span class="card-icon">📊</span>
+          <span data-i18n="opt_dashboard_title">Dashboard</span>
+        </h2>
+        
+        <!-- Main Stats Grid -->
+        <div class="dashboard-stats">
+          <div class="dashboard-stat-card primary">
+            <div class="stat-icon">🚫</div>
+            <div class="stat-content">
+              <span class="stat-value large" id="totalBlocked">0</span>
+              <span class="stat-label" data-i18n="opt_total_blocked">Total requests blocked</span>
+            </div>
+          </div>
+          <div class="dashboard-stat-card warning">
+            <div class="stat-icon">🍪</div>
+            <div class="stat-content">
+              <span class="stat-value large" id="cookiesBlocked">0</span>
+              <span class="stat-label" data-i18n="opt_cookies_blocked">Non-essential cookies blocked</span>
+            </div>
+          </div>
+          <div class="dashboard-stat-card danger">
+            <div class="stat-icon">👁️</div>
+            <div class="stat-content">
+              <span class="stat-value large" id="trackersBlocked">0</span>
+              <span class="stat-label" data-i18n="opt_trackers_blocked">Trackers blocked</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Detailed Stats -->
+        <div class="stats-breakdown">
+          <h3 class="breakdown-title" data-i18n="opt_breakdown_title">Breakdown by category</h3>
+          <div class="breakdown-grid">
+            <div class="breakdown-item">
+              <div class="breakdown-icon ads">📺</div>
+              <div class="breakdown-info">
+                <span class="breakdown-value" id="adsBlocked">0</span>
+                <span class="breakdown-label" data-i18n="cat_ads">Advertisements</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill ads" id="adsBar"></div>
+              </div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-icon trackers">👁️</div>
+              <div class="breakdown-info">
+                <span class="breakdown-value" id="trackersBlockedDetail">0</span>
+                <span class="breakdown-label" data-i18n="cat_trackers">Trackers</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill trackers" id="trackersBar"></div>
+              </div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-icon social">👥</div>
+              <div class="breakdown-info">
+                <span class="breakdown-value" id="socialBlocked">0</span>
+                <span class="breakdown-label" data-i18n="cat_social">Social Widgets</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill social" id="socialBar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Top Blocked Domains -->
+        <div class="top-domains">
+          <h3 class="domains-title" data-i18n="opt_top_domains">Top 10 blocked domains</h3>
+          <div class="domains-list" id="topDomainsList">
+            <div class="domains-empty" id="domainsEmpty">
+              <span class="empty-icon">🔍</span>
+              <p data-i18n="opt_no_domains">No domains blocked yet</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Quick Stats -->
+      <section class="card stats-overview">
+        <h2 class="card-title">
+          <span class="card-icon">⚡</span>
+          <span data-i18n="opt_quick_stats">Quick Stats</span>
+        </h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-value" id="totalCookies">0</span>
+            <span class="stat-label" data-i18n="opt_total_cookies">Banners processed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="todayBlocked">0</span>
+            <span class="stat-label" data-i18n="opt_today_blocked">Blocked today</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="whitelistCount">0</span>
+            <span class="stat-label" data-i18n="opt_whitelist_count">Whitelisted sites</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blocking Categories -->
+      <section class="card">
+        <h2 class="card-title">
+          <span class="card-icon">🎛️</span>
+          <span data-i18n="opt_categories_title">Blocking Categories</span>
+        </h2>
+        <p class="card-description" data-i18n="opt_categories_desc">Enable or disable specific blocking categories</p>
+        
+        <div class="category-list">
+          <div class="category-item">
+            <div class="category-info">
+              <div class="category-header">
+                <span class="category-icon">📺</span>
+                <span class="category-name" data-i18n="cat_ads">Advertisements</span>
+              </div>
+              <p class="category-desc" data-i18n="opt_cat_ads_desc">Block ad banners, popups, video pre-roll/mid-roll ads</p>
+              <span class="category-count" id="adsRulesCount">70 rules</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="adsToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="category-item">
+            <div class="category-info">
+              <div class="category-header">
+                <span class="category-icon">👁️</span>
+                <span class="category-name" data-i18n="cat_trackers">Trackers</span>
+              </div>
+              <p class="category-desc" data-i18n="opt_cat_trackers_desc">Block analytics, beacons, pixels and user tracking</p>
+              <span class="category-count" id="trackersRulesCount">70 rules</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="trackersToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="category-item">
+            <div class="category-info">
+              <div class="category-header">
+                <span class="category-icon">👥</span>
+                <span class="category-name" data-i18n="cat_social">Social Widgets</span>
+              </div>
+              <p class="category-desc" data-i18n="opt_cat_social_desc">Block like buttons, share buttons and social tracking</p>
+              <span class="category-count" id="socialRulesCount">55 rules</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="socialToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Whitelist Management -->
+      <section class="card">
+        <h2 class="card-title">
+          <span class="card-icon">✅</span>
+          <span data-i18n="opt_whitelist_title">Whitelist Management</span>
+        </h2>
+        <p class="card-description" data-i18n="opt_whitelist_desc">Sites where ads and trackers are allowed</p>
+        
+        <!-- Add to whitelist -->
+        <div class="add-whitelist">
+          <input type="text" 
+                 id="whitelistInput" 
+                 class="whitelist-input" 
+                 placeholder="example.com"
+                 data-i18n-placeholder="opt_whitelist_placeholder">
+          <button class="btn btn-primary" id="addWhitelistBtn">
+            <span class="btn-icon">+</span>
+            <span data-i18n="opt_add">Add</span>
+          </button>
+        </div>
+        
+        <!-- Whitelist items -->
+        <div class="whitelist-container" id="whitelistContainer">
+          <div class="whitelist-empty" id="whitelistEmpty">
+            <span class="empty-icon">📋</span>
+            <p data-i18n="opt_whitelist_empty">No sites in whitelist</p>
+          </div>
+        </div>
+        
+        <!-- Clear whitelist -->
+        <div class="whitelist-actions">
+          <button class="btn btn-danger" id="clearWhitelistBtn">
+            <span class="btn-icon">🗑️</span>
+            <span data-i18n="opt_clear_whitelist">Clear all</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Cookie Eater Settings -->
+      <section class="card">
+        <h2 class="card-title">
+          <span class="card-icon">🍪</span>
+          <span data-i18n="opt_cookie_title">Cookie Eater Settings</span>
+        </h2>
+        
+        <div class="settings-list">
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name" data-i18n="opt_auto_hide">Auto-hide banners</span>
+              <span class="setting-desc" data-i18n="opt_auto_hide_desc">Hide cookie banners after processing</span>
+            </div>
+            <label class="switch small">
+              <input type="checkbox" id="autoHideToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name" data-i18n="opt_clean_tracking">Clean tracking cookies</span>
+              <span class="setting-desc" data-i18n="opt_clean_tracking_desc">Remove known tracking cookies</span>
+            </div>
+            <label class="switch small">
+              <input type="checkbox" id="cleanTrackingToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name" data-i18n="opt_anonymize">Anonymize data</span>
+              <span class="setting-desc" data-i18n="opt_anonymize_desc">Replace tracking IDs with fake data</span>
+            </div>
+            <label class="switch small">
+              <input type="checkbox" id="anonymizeToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name" data-i18n="opt_notifications">Show notifications</span>
+              <span class="setting-desc" data-i18n="opt_notifications_desc">Display notifications when banners are processed</span>
+            </div>
+            <label class="switch small">
+              <input type="checkbox" id="notificationToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reset Section -->
+      <section class="card danger-zone">
+        <h2 class="card-title">
+          <span class="card-icon">⚠️</span>
+          <span data-i18n="opt_danger_zone">Danger Zone</span>
+        </h2>
+        
+        <div class="danger-actions">
+          <div class="danger-item">
+            <div class="danger-info">
+              <span class="danger-name" data-i18n="opt_reset_stats">Reset all statistics</span>
+              <span class="danger-desc" data-i18n="opt_reset_stats_desc">This will reset all counters to zero</span>
+            </div>
+            <button class="btn btn-danger" id="resetStatsBtn">
+              <span data-i18n="opt_reset">Reset</span>
+            </button>
+          </div>
+          
+          <div class="danger-item">
+            <div class="danger-info">
+              <span class="danger-name" data-i18n="opt_reset_all">Reset all settings</span>
+              <span class="danger-desc" data-i18n="opt_reset_all_desc">Restore extension to default settings</span>
+            </div>
+            <button class="btn btn-danger" id="resetAllBtn">
+              <span data-i18n="opt_reset">Reset</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p data-i18n="footer_credits">Made by Fusion AI</p>
+      <span class="separator">•</span>
+      <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toastContainer"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
+
