@@ -1,5 +1,5 @@
 /**
- * Cookie Eater - Popup Script v2.0
+ * Cookie Eater & AdBlocker - Popup Script v3.0
  * Gestion de l'interface utilisateur
  * Created by Fusion AI
  */
@@ -14,13 +14,19 @@ const translations = {
     status_active: 'Active',
     status_inactive: 'Inactive',
     
+    // Tabs
+    tab_cookies: 'Cookies',
+    tab_adblock: 'AdBlock',
+    
     // Stats
     stats_today: 'Today',
     stats_total: 'Total',
     stats_sites: 'Sites',
+    stats_page: 'This page',
     
     // Main toggle
     protection_active: 'Protection active',
+    adblock_enabled: 'Ad blocking',
     
     // Management mode
     management_mode: 'Management mode',
@@ -46,6 +52,23 @@ const translations = {
     btn_scan: 'Scan this page',
     btn_clean: 'Clean cookies',
     btn_reset: 'Reset stats',
+    btn_options: 'Options & Whitelist',
+    btn_reset_adblock: 'Reset stats',
+    
+    // AdBlocker categories
+    block_categories: 'Blocking categories',
+    cat_ads: 'Advertisements',
+    cat_ads_desc: 'Banners, popups, video ads',
+    cat_trackers: 'Trackers',
+    cat_trackers_desc: 'Analytics, beacons, pixels',
+    cat_social: 'Social widgets',
+    cat_social_desc: 'Like buttons, share buttons',
+    
+    // Whitelist
+    whitelist_blocked: 'Ads blocked',
+    whitelist_allowed: 'Ads allowed',
+    whitelist_allow: 'Allow ads',
+    whitelist_block: 'Block ads',
     
     // Footer
     footer_credits: 'Made by Fusion AI',
@@ -62,22 +85,35 @@ const translations = {
     toast_mode_essential: '🔒 Essential only',
     toast_mode_anonymize: '🎭 Accept & Anonymize',
     toast_lang_changed: 'Language changed',
+    toast_adblock_enabled: 'Ad blocking enabled',
+    toast_adblock_disabled: 'Ad blocking disabled',
+    toast_site_whitelisted: 'Site added to whitelist',
+    toast_site_removed: 'Site removed from whitelist',
+    toast_category_enabled: 'Category enabled',
+    toast_category_disabled: 'Category disabled',
     
     // Confirm
-    confirm_reset: 'Do you really want to reset all statistics?'
+    confirm_reset: 'Do you really want to reset all statistics?',
+    confirm_reset_adblock: 'Do you really want to reset ad blocking statistics?'
   },
   fr: {
     // Status
     status_active: 'Actif',
     status_inactive: 'Inactif',
     
+    // Tabs
+    tab_cookies: 'Cookies',
+    tab_adblock: 'AdBlock',
+    
     // Stats
     stats_today: "Aujourd'hui",
     stats_total: 'Total',
     stats_sites: 'Sites',
+    stats_page: 'Cette page',
     
     // Main toggle
     protection_active: 'Protection active',
+    adblock_enabled: 'Blocage publicitaire',
     
     // Management mode
     management_mode: 'Mode de gestion',
@@ -103,6 +139,23 @@ const translations = {
     btn_scan: 'Scanner cette page',
     btn_clean: 'Nettoyer les cookies',
     btn_reset: 'Réinitialiser stats',
+    btn_options: 'Options & Whitelist',
+    btn_reset_adblock: 'Réinitialiser stats',
+    
+    // AdBlocker categories
+    block_categories: 'Catégories de blocage',
+    cat_ads: 'Publicités',
+    cat_ads_desc: 'Bannières, popups, vidéos pub',
+    cat_trackers: 'Trackers',
+    cat_trackers_desc: 'Analytics, balises, pixels',
+    cat_social: 'Widgets sociaux',
+    cat_social_desc: 'Boutons Like, partage',
+    
+    // Whitelist
+    whitelist_blocked: 'Pubs bloquées',
+    whitelist_allowed: 'Pubs autorisées',
+    whitelist_allow: 'Autoriser pubs',
+    whitelist_block: 'Bloquer pubs',
     
     // Footer
     footer_credits: 'Créé par Fusion AI',
@@ -119,9 +172,16 @@ const translations = {
     toast_mode_essential: '🔒 Essentiels uniquement',
     toast_mode_anonymize: '🎭 Accepter & Anonymiser',
     toast_lang_changed: 'Langue changée',
+    toast_adblock_enabled: 'Blocage publicitaire activé',
+    toast_adblock_disabled: 'Blocage publicitaire désactivé',
+    toast_site_whitelisted: 'Site ajouté à la whitelist',
+    toast_site_removed: 'Site retiré de la whitelist',
+    toast_category_enabled: 'Catégorie activée',
+    toast_category_disabled: 'Catégorie désactivée',
     
     // Confirm
-    confirm_reset: 'Voulez-vous vraiment réinitialiser toutes les statistiques ?'
+    confirm_reset: 'Voulez-vous vraiment réinitialiser toutes les statistiques ?',
+    confirm_reset_adblock: 'Voulez-vous vraiment réinitialiser les statistiques de blocage ?'
   }
 };
 
@@ -130,7 +190,7 @@ const flags = {
   fr: '🇫🇷'
 };
 
-let currentLang = 'en'; // Default to English
+let currentLang = 'en';
 
 /**
  * Get translation for a key
@@ -148,11 +208,9 @@ function applyTranslations() {
     element.textContent = t(key);
   });
   
-  // Update flag
   document.getElementById('currentFlag').textContent = flags[currentLang];
-  
-  // Update status text
   updateStatusIndicator(currentConfig.enabled);
+  updateWhitelistUI();
 }
 
 /**
@@ -160,16 +218,9 @@ function applyTranslations() {
  */
 function toggleLanguage() {
   currentLang = currentLang === 'en' ? 'fr' : 'en';
-  
-  // Save language preference
   chrome.storage.sync.set({ cookieEaterLang: currentLang });
-  
-  // Apply translations
   applyTranslations();
-  
-  // Notify content scripts about language change
   notifyContentScriptsLang();
-  
   showToast(t('toast_lang_changed') + ' ' + flags[currentLang]);
 }
 
@@ -199,22 +250,25 @@ async function notifyContentScriptsLang() {
           type: 'langUpdate',
           lang: currentLang
         });
-      } catch (e) {
-        // Tab may not have content script
-      }
+      } catch (e) {}
     }
-  } catch (e) {
-    // Ignore errors
-  }
+  } catch (e) {}
 }
 
 // ==========================================
-// MAIN POPUP LOGIC
+// DOM ELEMENTS
 // ==========================================
 
-// DOM Elements
 const elements = {
+  // Header
   statusIndicator: document.getElementById('statusIndicator'),
+  langBtn: document.getElementById('langBtn'),
+  
+  // Tabs
+  tabBtns: document.querySelectorAll('.tab-btn'),
+  tabContents: document.querySelectorAll('.tab-content'),
+  
+  // Cookie Eater
   enabledToggle: document.getElementById('enabledToggle'),
   autoHideToggle: document.getElementById('autoHideToggle'),
   cleanTrackingToggle: document.getElementById('cleanTrackingToggle'),
@@ -226,11 +280,29 @@ const elements = {
   scanBtn: document.getElementById('scanBtn'),
   cleanBtn: document.getElementById('cleanBtn'),
   resetBtn: document.getElementById('resetBtn'),
-  langBtn: document.getElementById('langBtn'),
-  modeOptions: document.querySelectorAll('input[name="mode"]')
+  modeOptions: document.querySelectorAll('input[name="mode"]'),
+  
+  // AdBlocker
+  adblockToggle: document.getElementById('adblockToggle'),
+  adsToggle: document.getElementById('adsToggle'),
+  trackersToggle: document.getElementById('trackersToggle'),
+  socialToggle: document.getElementById('socialToggle'),
+  pageBlockedCount: document.getElementById('pageBlockedCount'),
+  todayBlockedCount: document.getElementById('todayBlockedCount'),
+  totalBlockedCount: document.getElementById('totalBlockedCount'),
+  currentDomain: document.getElementById('currentDomain'),
+  whitelistStatus: document.getElementById('whitelistStatus'),
+  whitelistIcon: document.getElementById('whitelistIcon'),
+  whitelistRow: document.getElementById('whitelistRow'),
+  toggleWhitelistBtn: document.getElementById('toggleWhitelistBtn'),
+  openOptionsBtn: document.getElementById('openOptionsBtn'),
+  resetAdblockBtn: document.getElementById('resetAdblockBtn')
 };
 
-// Default config
+// ==========================================
+// DEFAULT CONFIGS
+// ==========================================
+
 const DEFAULT_CONFIG = {
   enabled: true,
   mode: 'reject_all',
@@ -242,30 +314,61 @@ const DEFAULT_CONFIG = {
 };
 
 let currentConfig = { ...DEFAULT_CONFIG };
+let currentAdblockConfig = {
+  enabled: true,
+  adsEnabled: true,
+  trackersEnabled: true,
+  socialEnabled: true,
+  whitelist: []
+};
+let currentDomainName = '';
+let currentTabId = null;
 
-/**
- * Load config from storage
- */
+// ==========================================
+// TABS MANAGEMENT
+// ==========================================
+
+function initTabs() {
+  elements.tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.getAttribute('data-tab');
+      switchTab(tabId);
+    });
+  });
+}
+
+function switchTab(tabId) {
+  // Update buttons
+  elements.tabBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+  });
+  
+  // Update content
+  elements.tabContents.forEach(content => {
+    content.classList.toggle('active', content.id === `tab-${tabId}`);
+  });
+}
+
+// ==========================================
+// COOKIE EATER FUNCTIONS
+// ==========================================
+
 async function loadConfig() {
   try {
     const result = await chrome.storage.sync.get('cookieEaterConfig');
     if (result.cookieEaterConfig) {
       currentConfig = { ...DEFAULT_CONFIG, ...result.cookieEaterConfig };
     }
-    updateUI();
+    updateCookieUI();
   } catch (e) {
     console.error('Error loading config:', e);
   }
 }
 
-/**
- * Save config
- */
 async function saveConfig() {
   try {
     await chrome.storage.sync.set({ cookieEaterConfig: currentConfig });
     
-    // Notify content scripts
     const tabs = await chrome.tabs.query({});
     for (const tab of tabs) {
       try {
@@ -273,36 +376,199 @@ async function saveConfig() {
           type: 'configUpdate',
           config: currentConfig
         });
-      } catch (e) {
-        // Tab may not have content script
-      }
+      } catch (e) {}
     }
   } catch (e) {
     console.error('Error saving config:', e);
   }
 }
 
-/**
- * Load stats
- */
-async function loadStats() {
+async function loadCookieStats() {
   try {
     const stats = await chrome.runtime.sendMessage({ type: 'getStats' });
-    if (stats) {
-      animateNumber(elements.todayCount, stats.todayProcessed || 0);
-      animateNumber(elements.totalCount, stats.totalProcessed || 0);
-      animateNumber(elements.domainsCount, Object.keys(stats.domains || {}).length);
+    if (stats && stats.cookies) {
+      animateNumber(elements.todayCount, stats.cookies.todayProcessed || 0);
+      animateNumber(elements.totalCount, stats.cookies.totalProcessed || 0);
+      animateNumber(elements.domainsCount, Object.keys(stats.cookies.domains || {}).length);
     }
   } catch (e) {
-    console.error('Error loading stats:', e);
+    console.error('Error loading cookie stats:', e);
   }
 }
 
-/**
- * Animate number
- */
+function updateCookieUI() {
+  elements.enabledToggle.checked = currentConfig.enabled;
+  updateStatusIndicator(currentConfig.enabled);
+  
+  elements.autoHideToggle.checked = currentConfig.autoHide;
+  elements.notificationToggle.checked = currentConfig.showNotification;
+  elements.cleanTrackingToggle.checked = currentConfig.cleanTrackingCookies;
+  elements.anonymizeToggle.checked = currentConfig.anonymizeData;
+  
+  elements.modeOptions.forEach(option => {
+    option.checked = option.value === currentConfig.mode;
+  });
+}
+
+function updateStatusIndicator(enabled) {
+  const statusText = elements.statusIndicator.querySelector('.status-text');
+  
+  if (enabled && currentAdblockConfig.enabled) {
+    elements.statusIndicator.classList.remove('inactive');
+    statusText.textContent = t('status_active');
+  } else {
+    elements.statusIndicator.classList.add('inactive');
+    statusText.textContent = t('status_inactive');
+  }
+}
+
+// ==========================================
+// ADBLOCKER FUNCTIONS
+// ==========================================
+
+async function loadAdblockConfig() {
+  try {
+    const config = await chrome.runtime.sendMessage({ type: 'getAdblockConfig' });
+    if (config) {
+      currentAdblockConfig = config;
+    }
+    updateAdblockUI();
+  } catch (e) {
+    console.error('Error loading adblock config:', e);
+  }
+}
+
+async function loadAdblockStats() {
+  try {
+    const stats = await chrome.runtime.sendMessage({ type: 'getStats' });
+    
+    if (stats && stats.adblock) {
+      animateNumber(elements.todayBlockedCount, stats.adblock.todayBlocked || 0);
+      animateNumber(elements.totalBlockedCount, stats.adblock.totalBlocked || 0);
+    }
+    
+    // Page stats
+    if (currentTabId) {
+      const pageStats = await chrome.runtime.sendMessage({ 
+        type: 'getPageStats', 
+        tabId: currentTabId 
+      });
+      if (pageStats) {
+        animateNumber(elements.pageBlockedCount, pageStats.pageBlocked || 0);
+      }
+    }
+  } catch (e) {
+    console.error('Error loading adblock stats:', e);
+  }
+}
+
+async function loadCurrentTab() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab && tab.url) {
+      currentTabId = tab.id;
+      const url = new URL(tab.url);
+      currentDomainName = url.hostname.replace(/^www\./, '');
+      elements.currentDomain.textContent = currentDomainName;
+      
+      // Check whitelist status
+      await checkWhitelistStatus();
+    } else {
+      elements.currentDomain.textContent = '-';
+      elements.whitelistRow.classList.add('disabled');
+    }
+  } catch (e) {
+    elements.currentDomain.textContent = '-';
+    elements.whitelistRow.classList.add('disabled');
+  }
+}
+
+async function checkWhitelistStatus() {
+  try {
+    const response = await chrome.runtime.sendMessage({ 
+      type: 'isWhitelisted', 
+      domain: currentDomainName 
+    });
+    
+    updateWhitelistUI(response.isWhitelisted);
+  } catch (e) {
+    console.error('Error checking whitelist:', e);
+  }
+}
+
+function updateWhitelistUI(isWhitelisted = false) {
+  const btnText = elements.toggleWhitelistBtn.querySelector('.btn-text');
+  
+  if (isWhitelisted) {
+    elements.whitelistRow.classList.add('whitelisted');
+    elements.whitelistIcon.textContent = '✅';
+    elements.whitelistStatus.textContent = t('whitelist_allowed');
+    elements.whitelistStatus.setAttribute('data-i18n', 'whitelist_allowed');
+    if (btnText) {
+      btnText.textContent = t('whitelist_block');
+      btnText.setAttribute('data-i18n', 'whitelist_block');
+    }
+  } else {
+    elements.whitelistRow.classList.remove('whitelisted');
+    elements.whitelistIcon.textContent = '🛡️';
+    elements.whitelistStatus.textContent = t('whitelist_blocked');
+    elements.whitelistStatus.setAttribute('data-i18n', 'whitelist_blocked');
+    if (btnText) {
+      btnText.textContent = t('whitelist_allow');
+      btnText.setAttribute('data-i18n', 'whitelist_allow');
+    }
+  }
+}
+
+function updateAdblockUI() {
+  elements.adblockToggle.checked = currentAdblockConfig.enabled;
+  elements.adsToggle.checked = currentAdblockConfig.adsEnabled;
+  elements.trackersToggle.checked = currentAdblockConfig.trackersEnabled;
+  elements.socialToggle.checked = currentAdblockConfig.socialEnabled;
+}
+
+async function toggleWhitelist() {
+  if (!currentDomainName) return;
+  
+  try {
+    const response = await chrome.runtime.sendMessage({ 
+      type: 'isWhitelisted', 
+      domain: currentDomainName 
+    });
+    
+    if (response.isWhitelisted) {
+      await chrome.runtime.sendMessage({ 
+        type: 'removeFromWhitelist', 
+        domain: currentDomainName 
+      });
+      showToast(t('toast_site_removed'));
+      updateWhitelistUI(false);
+    } else {
+      await chrome.runtime.sendMessage({ 
+        type: 'addToWhitelist', 
+        domain: currentDomainName 
+      });
+      showToast(t('toast_site_whitelisted'));
+      updateWhitelistUI(true);
+    }
+    
+    // Reload the page to apply changes
+    if (currentTabId) {
+      chrome.tabs.reload(currentTabId);
+    }
+  } catch (e) {
+    console.error('Error toggling whitelist:', e);
+  }
+}
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+
 function animateNumber(element, target) {
   const current = parseInt(element.textContent) || 0;
+  if (current === target) return;
+  
   const duration = 500;
   const steps = 20;
   const increment = (target - current) / steps;
@@ -320,46 +586,7 @@ function animateNumber(element, target) {
   }, duration / steps);
 }
 
-/**
- * Update UI based on config
- */
-function updateUI() {
-  // Main toggle
-  elements.enabledToggle.checked = currentConfig.enabled;
-  updateStatusIndicator(currentConfig.enabled);
-  
-  // Options
-  elements.autoHideToggle.checked = currentConfig.autoHide;
-  elements.notificationToggle.checked = currentConfig.showNotification;
-  elements.cleanTrackingToggle.checked = currentConfig.cleanTrackingCookies;
-  elements.anonymizeToggle.checked = currentConfig.anonymizeData;
-  
-  // Mode
-  elements.modeOptions.forEach(option => {
-    option.checked = option.value === currentConfig.mode;
-  });
-}
-
-/**
- * Update status indicator
- */
-function updateStatusIndicator(enabled) {
-  const statusText = elements.statusIndicator.querySelector('.status-text');
-  
-  if (enabled) {
-    elements.statusIndicator.classList.remove('inactive');
-    statusText.textContent = t('status_active');
-  } else {
-    elements.statusIndicator.classList.add('inactive');
-    statusText.textContent = t('status_inactive');
-  }
-}
-
-/**
- * Show toast notification
- */
 function showToast(message, type = 'success') {
-  // Remove existing toasts
   document.querySelectorAll('.toast').forEach(t => t.remove());
   
   const toast = document.createElement('div');
@@ -373,9 +600,10 @@ function showToast(message, type = 'success') {
   }, 2000);
 }
 
-/**
- * Scan current page
- */
+// ==========================================
+// COOKIE EATER ACTIONS
+// ==========================================
+
 async function scanCurrentPage() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -388,15 +616,12 @@ async function scanCurrentPage() {
     await chrome.tabs.sendMessage(tab.id, { type: 'manualScan' });
     showToast(t('toast_scan_launched'));
     
-    setTimeout(loadStats, 1000);
+    setTimeout(loadCookieStats, 1000);
   } catch (e) {
     showToast(t('toast_cannot_scan'), 'error');
   }
 }
 
-/**
- * Clean tracking cookies
- */
 async function cleanCookies() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -413,15 +638,24 @@ async function cleanCookies() {
   }
 }
 
-/**
- * Reset stats
- */
-async function resetStats() {
+async function resetCookieStats() {
   if (confirm(t('confirm_reset'))) {
     try {
       await chrome.runtime.sendMessage({ type: 'resetStats' });
       showToast(t('toast_stats_reset'));
-      loadStats();
+      loadCookieStats();
+    } catch (e) {
+      showToast(t('toast_reset_error'), 'error');
+    }
+  }
+}
+
+async function resetAdblockStats() {
+  if (confirm(t('confirm_reset_adblock'))) {
+    try {
+      await chrome.runtime.sendMessage({ type: 'resetAdblockStats' });
+      showToast(t('toast_stats_reset'));
+      loadAdblockStats();
     } catch (e) {
       showToast(t('toast_reset_error'), 'error');
     }
@@ -432,6 +666,13 @@ async function resetStats() {
 // EVENT LISTENERS
 // ==========================================
 
+// Tabs
+initTabs();
+
+// Language
+elements.langBtn.addEventListener('click', toggleLanguage);
+
+// Cookie Eater toggles
 elements.enabledToggle.addEventListener('change', (e) => {
   currentConfig.enabled = e.target.checked;
   updateStatusIndicator(e.target.checked);
@@ -463,7 +704,6 @@ elements.modeOptions.forEach(option => {
     currentConfig.mode = e.target.value;
     saveConfig();
     
-    // Visual feedback
     const modeToasts = {
       'reject_all': t('toast_mode_reject'),
       'accept_essential': t('toast_mode_essential'),
@@ -473,10 +713,76 @@ elements.modeOptions.forEach(option => {
   });
 });
 
+// Cookie Eater buttons
 elements.scanBtn.addEventListener('click', scanCurrentPage);
 elements.cleanBtn.addEventListener('click', cleanCookies);
-elements.resetBtn.addEventListener('click', resetStats);
-elements.langBtn.addEventListener('click', toggleLanguage);
+elements.resetBtn.addEventListener('click', resetCookieStats);
+
+// AdBlocker toggles
+elements.adblockToggle.addEventListener('change', async (e) => {
+  try {
+    await chrome.runtime.sendMessage({ 
+      type: 'toggleAdblock', 
+      enabled: e.target.checked 
+    });
+    currentAdblockConfig.enabled = e.target.checked;
+    updateStatusIndicator(currentConfig.enabled);
+    showToast(e.target.checked ? t('toast_adblock_enabled') : t('toast_adblock_disabled'));
+  } catch (err) {
+    console.error('Error toggling adblock:', err);
+  }
+});
+
+elements.adsToggle.addEventListener('change', async (e) => {
+  try {
+    await chrome.runtime.sendMessage({ 
+      type: 'toggleCategory', 
+      category: 'ads',
+      enabled: e.target.checked 
+    });
+    currentAdblockConfig.adsEnabled = e.target.checked;
+    showToast(e.target.checked ? t('toast_category_enabled') : t('toast_category_disabled'));
+  } catch (err) {
+    console.error('Error toggling ads:', err);
+  }
+});
+
+elements.trackersToggle.addEventListener('change', async (e) => {
+  try {
+    await chrome.runtime.sendMessage({ 
+      type: 'toggleCategory', 
+      category: 'trackers',
+      enabled: e.target.checked 
+    });
+    currentAdblockConfig.trackersEnabled = e.target.checked;
+    showToast(e.target.checked ? t('toast_category_enabled') : t('toast_category_disabled'));
+  } catch (err) {
+    console.error('Error toggling trackers:', err);
+  }
+});
+
+elements.socialToggle.addEventListener('change', async (e) => {
+  try {
+    await chrome.runtime.sendMessage({ 
+      type: 'toggleCategory', 
+      category: 'social',
+      enabled: e.target.checked 
+    });
+    currentAdblockConfig.socialEnabled = e.target.checked;
+    showToast(e.target.checked ? t('toast_category_enabled') : t('toast_category_disabled'));
+  } catch (err) {
+    console.error('Error toggling social:', err);
+  }
+});
+
+// AdBlocker buttons
+elements.toggleWhitelistBtn.addEventListener('click', toggleWhitelist);
+
+elements.openOptionsBtn.addEventListener('click', () => {
+  chrome.runtime.openOptionsPage();
+});
+
+elements.resetAdblockBtn.addEventListener('click', resetAdblockStats);
 
 // ==========================================
 // INITIALIZATION
@@ -487,10 +793,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadLanguage();
   applyTranslations();
   
-  // Then load config and stats
+  // Load current tab info
+  await loadCurrentTab();
+  
+  // Load configs
   await loadConfig();
-  await loadStats();
+  await loadAdblockConfig();
+  
+  // Load stats
+  await loadCookieStats();
+  await loadAdblockStats();
   
   // Refresh stats periodically
-  setInterval(loadStats, 5000);
+  setInterval(() => {
+    loadCookieStats();
+    loadAdblockStats();
+  }, 3000);
 });

@@ -1,0 +1,498 @@
+[
+  {
+    "id": 2001,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||facebook.com/plugins^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2002,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||facebook.com/v*/plugins",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2003,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||connect.facebook.net/*/sdk.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2004,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||connect.facebook.net/*/all.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2005,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||facebook.com/sharer",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2006,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||staticxx.facebook.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2007,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||platform.twitter.com/widgets.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2008,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||platform.twitter.com/embed",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2009,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||twitter.com/i/jot",
+      "resourceTypes": ["script", "xmlhttprequest", "ping"]
+    }
+  },
+  {
+    "id": 2010,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||syndication.twitter.com^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2011,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||platform.linkedin.com/in.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2012,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||linkedin.com/embed",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2013,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||badges.linkedin.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2014,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||apis.google.com/js/plusone.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2015,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||apis.google.com/js/platform.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2016,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||plus.google.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2017,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||assets.pinterest.com^",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2018,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||widgets.pinterest.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2019,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||pinterest.com/pin/create/button",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2020,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||instagram.com/embed.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2021,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||tiktok.com/embed.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2022,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||reddit.com/static/button",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2023,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||reddit.com/buttonlite",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2024,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||tumblr.com/share",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2025,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||assets.tumblr.com/share-button.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2026,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||addthis.com^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2027,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||addtoany.com^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2028,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||sharethis.com^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2029,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||shareaholic.com^",
+      "resourceTypes": ["script", "sub_frame", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2030,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||po.st^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2031,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||socialsharecount.com^",
+      "resourceTypes": ["script", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2032,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||disqus.com/embed.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2033,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||disqus.com/count.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2034,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||disquscdn.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2035,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||whatsapp.com/share",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2036,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||telegram.org/share",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2037,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||vk.com/share.php",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2038,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||vk.com/js/api/openapi.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2039,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||ok.ru/js/flock.js",
+      "resourceTypes": ["script"]
+    }
+  },
+  {
+    "id": 2040,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||weibo.com/aj/v6/comment",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2041,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||connect.mail.ru^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2042,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||login.yandex.ru^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2043,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||xing.com/plugins",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2044,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||buffer.com/add",
+      "resourceTypes": ["sub_frame"]
+    }
+  },
+  {
+    "id": 2045,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||getpocket.com/v3/send",
+      "resourceTypes": ["script", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2046,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||flipboard.com/api",
+      "resourceTypes": ["script", "xmlhttprequest"]
+    }
+  },
+  {
+    "id": 2047,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||stumbleupon.com/badge",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2048,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||digg.com/tools",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2049,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||mix.com/mixit",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  },
+  {
+    "id": 2050,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*like-widget*",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2051,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*share-widget*",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2052,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*social-widget*",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2053,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*social-button*",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2054,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*follow-button*",
+      "resourceTypes": ["sub_frame", "script"]
+    }
+  },
+  {
+    "id": 2055,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||livefyre.com^",
+      "resourceTypes": ["script", "sub_frame"]
+    }
+  }
+]
+

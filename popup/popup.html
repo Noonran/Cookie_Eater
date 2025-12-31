@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookie Eater</title>
+  <title>Cookie Eater & AdBlocker</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <span class="logo-icon">🍪</span>
+        <span class="logo-icon">🛡️</span>
         <h1 class="logo-text">Cookie Eater</h1>
       </div>
       <div class="header-right">
@@ -26,137 +26,260 @@
       </div>
     </header>
 
-    <!-- Stats rapides -->
-    <section class="stats-section">
-      <div class="stat-card">
-        <div class="stat-value" id="todayCount">0</div>
-        <div class="stat-label" data-i18n="stats_today">Today</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="totalCount">0</div>
-        <div class="stat-label" data-i18n="stats_total">Total</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="domainsCount">0</div>
-        <div class="stat-label" data-i18n="stats_sites">Sites</div>
-      </div>
-    </section>
+    <!-- Tabs Navigation -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="cookies">
+        <span class="tab-icon">🍪</span>
+        <span data-i18n="tab_cookies">Cookies</span>
+      </button>
+      <button class="tab-btn" data-tab="adblock">
+        <span class="tab-icon">🚫</span>
+        <span data-i18n="tab_adblock">AdBlock</span>
+      </button>
+    </nav>
 
-    <!-- Toggle principal -->
-    <section class="toggle-section">
-      <div class="toggle-row">
-        <div class="toggle-info">
-          <span class="toggle-icon">⚡</span>
-          <span class="toggle-label" data-i18n="protection_active">Protection active</span>
+    <!-- Tab: Cookies -->
+    <div class="tab-content active" id="tab-cookies">
+      <!-- Stats rapides Cookies -->
+      <section class="stats-section">
+        <div class="stat-card">
+          <div class="stat-value" id="todayCount">0</div>
+          <div class="stat-label" data-i18n="stats_today">Today</div>
         </div>
-        <label class="switch">
-          <input type="checkbox" id="enabledToggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-    </section>
+        <div class="stat-card">
+          <div class="stat-value" id="totalCount">0</div>
+          <div class="stat-label" data-i18n="stats_total">Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="domainsCount">0</div>
+          <div class="stat-label" data-i18n="stats_sites">Sites</div>
+        </div>
+      </section>
 
-    <!-- Mode de gestion -->
-    <section class="mode-section">
-      <h2 class="section-title" data-i18n="management_mode">Management mode</h2>
-      <div class="mode-options">
-        <label class="mode-option" data-mode="reject_all">
-          <input type="radio" name="mode" value="reject_all" checked>
-          <div class="mode-content">
-            <span class="mode-icon">🛡️</span>
-            <div class="mode-details">
-              <span class="mode-name" data-i18n="mode_reject_all">Reject all</span>
-              <span class="mode-desc" data-i18n="mode_reject_all_desc">Maximum privacy</span>
+      <!-- Toggle principal Cookies -->
+      <section class="toggle-section">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-icon">⚡</span>
+            <span class="toggle-label" data-i18n="protection_active">Protection active</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="enabledToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Mode de gestion -->
+      <section class="mode-section">
+        <h2 class="section-title" data-i18n="management_mode">Management mode</h2>
+        <div class="mode-options">
+          <label class="mode-option" data-mode="reject_all">
+            <input type="radio" name="mode" value="reject_all" checked>
+            <div class="mode-content">
+              <span class="mode-icon">🛡️</span>
+              <div class="mode-details">
+                <span class="mode-name" data-i18n="mode_reject_all">Reject all</span>
+                <span class="mode-desc" data-i18n="mode_reject_all_desc">Maximum privacy</span>
+              </div>
+            </div>
+          </label>
+          <label class="mode-option" data-mode="accept_essential">
+            <input type="radio" name="mode" value="accept_essential">
+            <div class="mode-content">
+              <span class="mode-icon">🔒</span>
+              <div class="mode-details">
+                <span class="mode-name" data-i18n="mode_essential">Essential only</span>
+                <span class="mode-desc" data-i18n="mode_essential_desc">Functional cookies only</span>
+              </div>
+            </div>
+          </label>
+          <label class="mode-option" data-mode="accept_anonymized">
+            <input type="radio" name="mode" value="accept_anonymized">
+            <div class="mode-content">
+              <span class="mode-icon">🎭</span>
+              <div class="mode-details">
+                <span class="mode-name" data-i18n="mode_anonymize">Accept & Anonymize</span>
+                <span class="mode-desc" data-i18n="mode_anonymize_desc">Accept then replace with fake data</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Options avancées Cookies -->
+      <section class="options-section">
+        <h2 class="section-title" data-i18n="privacy_options">Privacy options</h2>
+        <div class="option-row">
+          <div class="option-info">
+            <span class="option-label" data-i18n="opt_hide_banners">Hide banners</span>
+            <span class="option-desc" data-i18n="opt_hide_banners_desc">Hide banner after processing</span>
+          </div>
+          <label class="switch small">
+            <input type="checkbox" id="autoHideToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="option-row">
+          <div class="option-info">
+            <span class="option-label" data-i18n="opt_clean_trackers">Clean trackers</span>
+            <span class="option-desc" data-i18n="opt_clean_trackers_desc">Remove tracking cookies</span>
+          </div>
+          <label class="switch small">
+            <input type="checkbox" id="cleanTrackingToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="option-row">
+          <div class="option-info">
+            <span class="option-label" data-i18n="opt_anonymize">Anonymize data</span>
+            <span class="option-desc" data-i18n="opt_anonymize_desc">Replace IDs with fake ones</span>
+          </div>
+          <label class="switch small">
+            <input type="checkbox" id="anonymizeToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="option-row">
+          <div class="option-info">
+            <span class="option-label" data-i18n="opt_notifications">Notifications</span>
+            <span class="option-desc" data-i18n="opt_notifications_desc">Show discrete notification</span>
+          </div>
+          <label class="switch small">
+            <input type="checkbox" id="notificationToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Actions Cookies -->
+      <section class="actions-section">
+        <button class="btn btn-primary" id="scanBtn">
+          <span class="btn-icon">🔍</span>
+          <span data-i18n="btn_scan">Scan this page</span>
+        </button>
+        <button class="btn btn-warning" id="cleanBtn">
+          <span class="btn-icon">🧹</span>
+          <span data-i18n="btn_clean">Clean cookies</span>
+        </button>
+        <button class="btn btn-secondary" id="resetBtn">
+          <span class="btn-icon">🔄</span>
+          <span data-i18n="btn_reset">Reset stats</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- Tab: AdBlocker -->
+    <div class="tab-content" id="tab-adblock">
+      <!-- Stats AdBlocker -->
+      <section class="stats-section adblock-stats">
+        <div class="stat-card highlight">
+          <div class="stat-value" id="pageBlockedCount">0</div>
+          <div class="stat-label" data-i18n="stats_page">This page</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="todayBlockedCount">0</div>
+          <div class="stat-label" data-i18n="stats_today">Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalBlockedCount">0</div>
+          <div class="stat-label" data-i18n="stats_total">Total</div>
+        </div>
+      </section>
+
+      <!-- Toggle principal AdBlocker -->
+      <section class="toggle-section">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-icon">🚫</span>
+            <span class="toggle-label" data-i18n="adblock_enabled">Ad blocking</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="adblockToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Whitelist site actuel -->
+      <section class="whitelist-section">
+        <div class="whitelist-row" id="whitelistRow">
+          <div class="whitelist-info">
+            <span class="whitelist-icon" id="whitelistIcon">🌐</span>
+            <div class="whitelist-details">
+              <span class="whitelist-domain" id="currentDomain">-</span>
+              <span class="whitelist-status" id="whitelistStatus" data-i18n="whitelist_blocked">Ads blocked</span>
             </div>
           </div>
-        </label>
-        <label class="mode-option" data-mode="accept_essential">
-          <input type="radio" name="mode" value="accept_essential">
-          <div class="mode-content">
-            <span class="mode-icon">🔒</span>
-            <div class="mode-details">
-              <span class="mode-name" data-i18n="mode_essential">Essential only</span>
-              <span class="mode-desc" data-i18n="mode_essential_desc">Functional cookies only</span>
+          <button class="btn-whitelist" id="toggleWhitelistBtn">
+            <span class="btn-text" data-i18n="whitelist_allow">Allow ads</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Catégories de blocage -->
+      <section class="categories-section">
+        <h2 class="section-title" data-i18n="block_categories">Blocking categories</h2>
+        
+        <div class="category-row">
+          <div class="category-info">
+            <span class="category-icon">📺</span>
+            <div class="category-details">
+              <span class="category-name" data-i18n="cat_ads">Advertisements</span>
+              <span class="category-desc" data-i18n="cat_ads_desc">Banners, popups, video ads</span>
             </div>
           </div>
-        </label>
-        <label class="mode-option" data-mode="accept_anonymized">
-          <input type="radio" name="mode" value="accept_anonymized">
-          <div class="mode-content">
-            <span class="mode-icon">🎭</span>
-            <div class="mode-details">
-              <span class="mode-name" data-i18n="mode_anonymize">Accept & Anonymize</span>
-              <span class="mode-desc" data-i18n="mode_anonymize_desc">Accept then replace with fake data</span>
+          <label class="switch small">
+            <input type="checkbox" id="adsToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="category-row">
+          <div class="category-info">
+            <span class="category-icon">👁️</span>
+            <div class="category-details">
+              <span class="category-name" data-i18n="cat_trackers">Trackers</span>
+              <span class="category-desc" data-i18n="cat_trackers_desc">Analytics, beacons, pixels</span>
             </div>
           </div>
-        </label>
-      </div>
-    </section>
+          <label class="switch small">
+            <input type="checkbox" id="trackersToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="category-row">
+          <div class="category-info">
+            <span class="category-icon">👥</span>
+            <div class="category-details">
+              <span class="category-name" data-i18n="cat_social">Social widgets</span>
+              <span class="category-desc" data-i18n="cat_social_desc">Like buttons, share buttons</span>
+            </div>
+          </div>
+          <label class="switch small">
+            <input type="checkbox" id="socialToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
 
-    <!-- Options avancées -->
-    <section class="options-section">
-      <h2 class="section-title" data-i18n="privacy_options">Privacy options</h2>
-      <div class="option-row">
-        <div class="option-info">
-          <span class="option-label" data-i18n="opt_hide_banners">Hide banners</span>
-          <span class="option-desc" data-i18n="opt_hide_banners_desc">Hide banner after processing</span>
-        </div>
-        <label class="switch small">
-          <input type="checkbox" id="autoHideToggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="option-row">
-        <div class="option-info">
-          <span class="option-label" data-i18n="opt_clean_trackers">Clean trackers</span>
-          <span class="option-desc" data-i18n="opt_clean_trackers_desc">Remove tracking cookies</span>
-        </div>
-        <label class="switch small">
-          <input type="checkbox" id="cleanTrackingToggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="option-row">
-        <div class="option-info">
-          <span class="option-label" data-i18n="opt_anonymize">Anonymize data</span>
-          <span class="option-desc" data-i18n="opt_anonymize_desc">Replace IDs with fake ones</span>
-        </div>
-        <label class="switch small">
-          <input type="checkbox" id="anonymizeToggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="option-row">
-        <div class="option-info">
-          <span class="option-label" data-i18n="opt_notifications">Notifications</span>
-          <span class="option-desc" data-i18n="opt_notifications_desc">Show discrete notification</span>
-        </div>
-        <label class="switch small">
-          <input type="checkbox" id="notificationToggle" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-    </section>
-
-    <!-- Actions -->
-    <section class="actions-section">
-      <button class="btn btn-primary" id="scanBtn">
-        <span class="btn-icon">🔍</span>
-        <span data-i18n="btn_scan">Scan this page</span>
-      </button>
-      <button class="btn btn-warning" id="cleanBtn">
-        <span class="btn-icon">🧹</span>
-        <span data-i18n="btn_clean">Clean cookies</span>
-      </button>
-      <button class="btn btn-secondary" id="resetBtn">
-        <span class="btn-icon">🔄</span>
-        <span data-i18n="btn_reset">Reset stats</span>
-      </button>
-    </section>
+      <!-- Actions AdBlocker -->
+      <section class="actions-section">
+        <button class="btn btn-secondary" id="openOptionsBtn">
+          <span class="btn-icon">⚙️</span>
+          <span data-i18n="btn_options">Options & Whitelist</span>
+        </button>
+        <button class="btn btn-secondary" id="resetAdblockBtn">
+          <span class="btn-icon">🔄</span>
+          <span data-i18n="btn_reset_adblock">Reset stats</span>
+        </button>
+      </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
-      <span class="version">v2.0.0</span>
+      <span class="version">v3.0.0</span>
       <span class="separator">•</span>
       <span class="credits" data-i18n="footer_credits">Made by Fusion AI</span>
     </footer>

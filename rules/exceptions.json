@@ -1,0 +1,346 @@
+[
+  {
+    "id": 10001,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["github.com", "github.io", "githubusercontent.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10002,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["gitlab.com", "bitbucket.org"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10003,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["stackoverflow.com", "stackexchange.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10010,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["youtube.com", "youtu.be", "youtube-nocookie.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame", "ping", "websocket"]
+    }
+  },
+  {
+    "id": 10011,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||youtube.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10012,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||googlevideo.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "other"]
+    }
+  },
+  {
+    "id": 10013,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||ytimg.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10014,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||yt3.ggpht.com^",
+      "resourceTypes": ["image"]
+    }
+  },
+  {
+    "id": 10015,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||youtube-nocookie.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "other"]
+    }
+  },
+  {
+    "id": 10016,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||youtu.be^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10017,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||ggpht.com^",
+      "resourceTypes": ["image", "other"]
+    }
+  },
+  {
+    "id": 10018,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||googleusercontent.com^",
+      "initiatorDomains": ["youtube.com", "youtu.be"],
+      "resourceTypes": ["image", "media", "other"]
+    }
+  },
+  {
+    "id": 10019,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||gstatic.com^",
+      "initiatorDomains": ["youtube.com", "youtu.be"],
+      "resourceTypes": ["script", "image", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10020,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["twitch.tv", "twitchcdn.net"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame", "websocket"]
+    }
+  },
+  {
+    "id": 10021,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||twitch.tv^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10022,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||twitchcdn.net^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10023,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||jtvnw.net^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "other"]
+    }
+  },
+  {
+    "id": 10030,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["netflix.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10031,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||netflix.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10032,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||nflxvideo.net^",
+      "resourceTypes": ["media", "other"]
+    }
+  },
+  {
+    "id": 10040,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["primevideo.com", "amazon.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10050,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["vimeo.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10051,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||vimeo.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10052,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||vimeocdn.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10060,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["dailymotion.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10061,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||dailymotion.com^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10062,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "||dmcdn.net^",
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10070,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["docs.google.com", "drive.google.com", "mail.google.com", "calendar.google.com", "meet.google.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10080,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["notion.so", "notion.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10090,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["figma.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10100,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["slack.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "websocket"]
+    }
+  },
+  {
+    "id": 10110,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["discord.com", "discordapp.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "websocket"]
+    }
+  },
+  {
+    "id": 10120,
+    "priority": 100,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["linkedin.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other"]
+    }
+  },
+  {
+    "id": 10130,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["crunchyroll.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10140,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["disneyplus.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  },
+  {
+    "id": 10150,
+    "priority": 1000,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "*",
+      "initiatorDomains": ["hbomax.com", "max.com"],
+      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame", "media", "stylesheet", "font", "other", "main_frame"]
+    }
+  }
+]
